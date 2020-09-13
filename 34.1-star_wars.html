@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>34.1-star wars</title>
+    
+    </style>
+  </head>
+  <body>
+ 
+
+    <script>
+      const startApp = () => {
+        const data = [];
+        const getData = async () => {
+          for (let i = 1; i <= 10; i++) {
+            const baseUrl = "http://swapi.dev/api/";
+            try {
+              const reqPeople = await fetch(`${baseUrl}people/${i}`);
+              const peopleData = await reqPeople.json();
+              const reqPlanet = await fetch(peopleData.homeworld);
+              const planetData = await reqPlanet.json();
+              const obj = {
+                name: peopleData.name,
+                hair: peopleData.hair_color,
+                height: peopleData.height,
+                planet: {
+                  name: planetData.name,
+                  population: planetData.population,
+                },
+              };
+              data.push(obj);
+            } catch (error) {
+              console.log(error);
+            }
+          }
+          console.log(data);
+        };
+        getData();
+      };
+
+      const displayData = () => {
+        console.log(data);
+      };
+      
+      startApp();
+
+    </script>
+  </body>
+</html>
